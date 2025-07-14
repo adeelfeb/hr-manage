@@ -1,0 +1,37 @@
+<footer class="bg-dark text-light mt-5 py-4">
+  <div class="container">
+    <div class="row">
+      <!-- Left Column -->
+      <div class="col-md-4 mb-3">
+        <h5>About</h5>
+        <ul class="list-unstyled">
+          <li><%= link_to "About Us", about_path, class: "text-decoration-none text-light" %></li>
+          <li><%= link_to "Contact", contact_path, class: "text-decoration-none text-light" %></li>
+        </ul>
+      </div>
+
+      <!-- Middle Column -->
+      <div class="col-md-4 mb-3">
+        <h5>Account</h5>
+        <ul class="list-unstyled">
+          <li><%= link_to "Sign Up", sign_up_path, class: "text-decoration-none text-light" %></li>
+          <li><%= link_to "Login", login_path, class: "text-decoration-none text-light" %></li>
+        </ul>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-md-4 mb-3 text-md-end">
+        <h5>Follow Us</h5>
+        <a href="#" class="text-light me-2"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="text-light me-2"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="text-light"><i class="bi bi-github"></i></a>
+      </div>
+    </div>
+
+    <hr class="bg-secondary">
+
+    <div class="text-center small">
+      &copy; <%= Time.current.year %> HR-Mitra. All rights reserved.
+    </div>
+  </div>
+</footer>

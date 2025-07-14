@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  get "pages/about_us"
-  get "pages/contact_us"
-  get "pages/sign_up"
-  get "pages/login"
-  
+  get "about",    to: "pages#about_us",  as: :about
+  get "contact",  to: "pages#contact_us", as: :contact
+  get "sign-up",  to: "pages#sign_up",    as: :sign_up
+  get "login",    to: "pages#login",      as: :login
+
 
   get "/home" => "home#index"
   # get "home/index", to: "home#index"

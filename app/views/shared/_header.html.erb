@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary px-4">
+  <div class="container-fluid">
+    <!-- Brand: Left Aligned -->
+    <%= link_to "HR Manage", root_path, class: "navbar-brand me-auto" %>
+
+    <!-- Toggler for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Right Side Links -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav mb-2 mb-lg-0 gap-2">
+        <li class="nav-item">
+          <%= link_to "Home", root_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "About Us", about_path, target: "_blank", class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "About Us Other", { controller: :pages, action: :about_us }, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Contact Us", contact_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Sign Up", sign_up_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Login", login_path, class: "nav-link" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
