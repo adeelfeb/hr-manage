@@ -13,6 +13,17 @@
     <th>Employee</th>
     <td><%= @document.employee&.name || "N/A" %></td>
   </tr>
+  <tr>
+  <th>Image</th>
+  <td>
+    <% if @document.image.attached? %>
+      <%= image_tag url_for(@document.image), width: "200" %>
+    <% else %>
+      <em>No image uploaded</em>
+    <% end %>
+  </td>
+</tr>
+
 </table>
 
 <%= link_to "Edit", edit_document_path(@document), class: "btn btn-warning" %>

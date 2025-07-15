@@ -25,6 +25,11 @@
     <%= form.collection_select :employee_id, Employee.all, :id, :name, { prompt: "Select an employee" }, { class: "form-select" } %>
   </div>
 
+  <div class="mb-3">
+    <%= form.label :employee_id, "Upload Image", class: "form-label" %> <br>
+    <%= form.file_field :image, { class: "form-upload" } %>
+  </div>
+
   <div class="mt-4">
     <%= form.submit class: "btn btn-primary" %>
   </div>

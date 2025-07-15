@@ -6,6 +6,8 @@ class Document < ApplicationRecord
   
   belongs_to :employee
 
+  has_one_attached :image
+
   validates :name, :doc_type, presence: true
 
 
