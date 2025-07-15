@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get "login",    to: "pages#login",      as: :login
 
 
+
+  resources :employees, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   get "/home" => "home#index"
   # get "home/index", to: "home#index"
 
