@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
 
   resources :employees, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :documents
   get "/home" => "home#index"
   # get "home/index", to: "home#index"
 

@@ -1,0 +1,19 @@
+<h1>Document Details</h1>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Name</th>
+    <td><%= @document.name %></td>
+  </tr>
+  <tr>
+    <th>Type</th>
+    <td><%= @document.doc_type %></td>
+  </tr>
+  <tr>
+    <th>Employee</th>
+    <td><%= @document.employee&.name || "N/A" %></td>
+  </tr>
+</table>
+
+<%= link_to "Edit", edit_document_path(@document), class: "btn btn-warning" %>
+<%= link_to "Back to Documents", documents_path, class: "btn btn-secondary" %>

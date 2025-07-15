@@ -30,14 +30,15 @@ class EmployeesController < ApplicationController
     end
 
 
-    def edit 
+    def edit
+        
     end
   
     def update
         if(@employee.update(employee_params))
             redirect_to employees_path, notice: "Employee data updated"
         else
-            redner :edit 
+            render :edit 
         end
     end
 
