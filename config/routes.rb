@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  # devise_for :users
+  devise_for :users, controllers: {
+  sessions: "admin_user/sessions",
+  registrations: "admin_user/registrations"
+}
+
   get "about",    to: "pages#about_us",  as: :about
   get "contact",  to: "pages#contact_us", as: :contact
   get "sign-up",  to: "pages#sign_up",    as: :sign_up

@@ -1,6 +1,6 @@
 class Employee < ApplicationRecord
 
-  has_many :documents
+  has_many :documents, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
