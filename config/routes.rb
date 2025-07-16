@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
+  
   # devise_for :users
-  devise_for :users, controllers: {
-  sessions: "admin_user/sessions",
-  registrations: "admin_user/registrations"
+  devise_for :users
+  
+  devise_for :seconds, controllers: {
+  sessions: 'seconds/sessions',
+  registrations: 'seconds/registrations',
+  passwords: 'seconds/passwords'
 }
+
 
   get "about",    to: "pages#about_us",  as: :about
   get "contact",  to: "pages#contact_us", as: :contact

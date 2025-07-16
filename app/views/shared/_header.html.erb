@@ -1,6 +1,5 @@
 <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3 px-4">
   <div class="container-fluid">
     <!-- Brand -->
@@ -30,21 +29,21 @@
         </li>
       </ul>
 
-      <!-- Right Auth Links -->
+      <!-- Right Auth Links for Devise model: Second -->
       <ul class="navbar-nav mb-2 mb-lg-0 gap-2">
-        <% if user_signed_in? %>
+        <% if second_signed_in? %>
           <li class="nav-item d-flex align-items-center text-white px-2">
-            👋 Welcome, <%= current_user.email %>
+            👋 Welcome, <%= current_second.email %>
           </li>
           <li class="nav-item">
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
+            <%= link_to "Logout", destroy_second_session_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "btn btn-light btn-sm" %>
+            <%= link_to "Login", new_second_session_path, class: "btn btn-light btn-sm" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline-light btn-sm" %>
+            <%= link_to "Sign Up", new_second_registration_path, class: "btn btn-outline-light btn-sm" %>
           </li>
         <% end %>
       </ul>
