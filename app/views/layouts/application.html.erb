@@ -33,12 +33,25 @@
   
 
   <div class="container">
-  <% if notice %>
-  <div id="flash-notice" class="alert alert-success alert-dismissible fade show" role="alert">
-    <%= notice %>
+ <% flash.each do |type, message| %>
+  <%# Map flash types to Bootstrap alert classes %>
+  <% alert_class = case type.to_sym
+     when :notice then "alert-success"
+     when :alert  then "alert-danger"
+     when :error  then "alert-danger"
+     when :success then "alert-success"
+     when :warning then "alert-warning"
+     else "alert-info"
+     end
+  %>
+  <div class="alert <%= alert_class %> alert-dismissible fade show" role="alert">
+    <%= message %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% end %>
+
+
+
     <div class="row">
       <div class="col-md-12">
         <%= yield %>
