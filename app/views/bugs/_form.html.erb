@@ -1,0 +1,50 @@
+<%= form_with(model: [@project, @bug], local: true) do |f| %>
+  <% if @bug.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @bug.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :bug_category %>
+    <%= f.select :bug_category, Bug.bug_categories.keys.map { |k| [k.humanize, k] }, {}, class: "form-select" %>
+  </div>
+
+  <% if current_user.is_manager? %>
+    <div class="mb-3">
+      <%= f.label :progress_state %>
+      <%= f.select :progress_state, Bug.progress_states.keys.map { |k| [k.humanize, k] }, {}, class: "form-select" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :developer_id, "Assign Developer" %>
+      <%= f.collection_select :developer_id, @project.users.where(role: "is_developer"), :id, :name, { include_blank: true }, class: "form-select" %>
+    </div>
+  <% elsif current_user.is_developer? %>
+    <div class="mb-3">
+      <%= f.label :progress_state %>
+      <%= f.select :progress_state, Bug.progress_states.keys.map { |k| [k.humanize, k] }, {}, class: "form-select" %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :image %>
+    <%= f.file_field :image, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Submit Bug", class: "btn btn-primary" %>
+<% end %>

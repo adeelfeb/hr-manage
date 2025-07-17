@@ -1,6 +1,47 @@
-<h1> <%= @title %> </h1>
-<p> <%= @sub_heading %></p>
+<div class="container mt-4">
+  <h1 class="mb-3">👋 Welcome, <%= current_user.name %>!</h1>
 
-<p>UTesting our project here</p>
-<p>To change the title and sub-heading, edit the <code>@title</code> and <code>@sub_heading</code> variables in the corresponding controller action.</p>
-<p>For example, in <code>home_controller.rb</code>:</p>
+  <% if policy(:project).is_manager? %>
+    <div class="alert alert-info shadow-sm">
+      <h4 class="alert-heading">🎯 Manager Dashboard</h4>
+      <p>You have full control over the project lifecycle.</p>
+      <ul>
+        <li>Create and manage projects.</li>
+        <li>Assign developers to your projects.</li>
+        <li>Track bugs and progress of your teams.</li>
+      </ul>
+      <p class="mb-0">Go to <%= link_to 'Projects', projects_path, class: 'link-primary fw-bold' %> to get started.</p>
+    </div>
+
+  <% elsif policy(:project).is_developer? %>
+    <div class="alert alert-warning shadow-sm">
+      <h4 class="alert-heading">🧑‍💻 Developer Workspace</h4>
+      <p>You are assigned to projects by managers and responsible for fixing bugs.</p>
+      <ul>
+        <li>View assigned projects.</li>
+        <li>Work on bugs reported by QA.</li>
+        <li>Update bug statuses as you resolve them.</li>
+      </ul>
+      <p class="mb-0">Check your assigned <%= link_to 'Projects', projects_path, class: 'link-warning fw-bold' %>.</p>
+    </div>
+
+  <% elsif policy(:project).is_qa? %>
+    <div class="alert alert-success shadow-sm">
+      <h4 class="alert-heading">🔍 QA Zone</h4>
+      <p>Your job is to test features and report bugs clearly.</p>
+      <ul>
+        <li>Open and view project details.</li>
+        <li>Report bugs with titles, types, and statuses.</li>
+        <li>Optionally attach screenshots (.png or .gif, max 5MB).</li>
+      </ul>
+      <p class="mb-0">Start by browsing <%= link_to 'Projects', projects_path, class: 'link-success fw-bold' %>.</p>
+    </div>
+
+  <% else %>
+    <div class="alert alert-secondary shadow-sm">
+      <h4 class="alert-heading">🙋 General Access</h4>
+      <p>You have limited access. Please contact an administrator if this is unexpected.</p>
+      <p class="mb-0">Visit <%= link_to 'Projects', projects_path, class: 'link-dark fw-bold' %> to see available content.</p>
+    </div>
+  <% end %>
+</div>

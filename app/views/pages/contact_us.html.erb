@@ -1,1 +1,108 @@
-<h1>cONTACT Us</h1>
+<div class="container my-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4">Contact Us</h1>
+    <p class="lead">We're here to help you. Choose your concern based on your role and find your answers below.</p>
+  </div>
+
+  <% if user_signed_in? %>
+    <% case current_user.role %>
+    <% when "is_manager" %>
+      <div class="mb-5">
+        <h2>Manager Support</h2>
+        <p>
+          As a manager, you can reach out to us for help with project creation, user assignment, and managing bug lifecycle.
+        </p>
+        <p>
+          📧 Email us at: <strong>manager-support@bugtrackpro.com</strong><br />
+          📞 Hotline: <strong>+92-300-1234567</strong>
+        </p>
+      </div>
+    <% when "is_developer" %>
+      <div class="mb-5">
+        <h2>Developer Assistance</h2>
+        <p>
+          Need help with bug resolution, assigned project queries, or understanding ticket priorities? We got you covered.
+        </p>
+        <p>
+          📧 Email us at: <strong>dev-help@bugtrackpro.com</strong><br />
+          🔧 Dev Slack: <strong>#dev-support</strong>
+        </p>
+      </div>
+    <% when "is_qa" %>
+      <div class="mb-5">
+        <h2>QA Inquiries</h2>
+        <p>
+          Facing issues while reporting bugs? Want clarity on bug statuses or uploading screenshots? Let’s sort it out.
+        </p>
+        <p>
+          📧 Email us at: <strong>qa-support@bugtrackpro.com</strong><br />
+          🐞 Bug Tracker Wiki: <strong>/docs/qa-guide</strong>
+        </p>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="mb-5">
+      <h2>General Inquiry</h2>
+      <p>
+        If you're not logged in or just exploring, feel free to reach us through our general support channel.
+      </p>
+      <p>
+        📧 Email: <strong>support@bugtrackpro.com</strong><br />
+        🌐 Website: <strong>www.bugtrackpro.com</strong>
+      </p>
+    </div>
+  <% end %>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Submit Your Query</h3>
+      <form>
+        <div class="mb-3">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" placeholder="John Doe">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email address</label>
+          <input type="email" class="form-control" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Message</label>
+          <textarea class="form-control" rows="5" placeholder="Type your message here..."></textarea>
+        </div>
+        <button class="btn btn-outline-primary">Submit</button>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <h3>Frequently Asked Questions</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <strong>How do I reset my password?</strong><br />
+          Visit the login page and click “Forgot your password?”
+        </li>
+        <li class="list-group-item">
+          <strong>How do I assign a user to a project?</strong><br />
+          Managers can assign users by editing the project and selecting available developers.
+        </li>
+        <li class="list-group-item">
+          <strong>Can I upload GIF images for bugs?</strong><br />
+          Yes, we allow PNG and GIF images only. Max size: 5MB.
+        </li>
+        <li class="list-group-item">
+          <strong>Where do I track the status of bugs I reported?</strong><br />
+          Go to “My Bugs” section under your profile.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+
+  <div class="text-center">
+    <h5>Still need help?</h5>
+    <p>Drop us an email anytime or schedule a call with our support team.</p>
+    <a href="mailto:support@bugtrackpro.com" class="btn btn-success">Email Support</a>
+  </div>
+</div>

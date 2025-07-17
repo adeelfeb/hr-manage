@@ -1,0 +1,35 @@
+<h2>Bugs for <%= @project.title %></h2>
+
+<% if @bugs.any? %>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Assigned Developer</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bugs.each do |bug| %>
+        <tr>
+          <td><%= bug.title %></td>
+          <td><%= bug.description %></td>
+          <td><%= bug.bug_category.humanize %></td>
+          <td><%= bug.progress_state.humanize %></td>
+          <td><%= bug.developer&.name || "Not Assigned" %></td>
+          <td>
+            <%= link_to "Edit", edit_project_bug_path(@project, bug), class: "btn btn-sm btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No bugs have been reported yet.</p>
+<% end %>
+
+<%= link_to "Report New Bug", new_project_bug_path(@project), class: "btn btn-success" if current_user.is_qa? || current_user.is_manager? %>
+<%= link_to "Back to Project", project_path(@project), class: "btn btn-secondary" %>

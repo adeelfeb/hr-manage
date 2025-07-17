@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3 px-4">
   <div class="container-fluid">
     <!-- Brand -->
-    <%= link_to "HR Manage", root_path, class: "navbar-brand fw-bold text-white" %>
+    <%= link_to "Bugzila", root_path, class: "navbar-brand fw-bold text-white" %>
 
     <!-- Mobile Toggle -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
@@ -19,11 +19,9 @@
           <%= link_to "Home", root_path, class: "nav-link text-white" %>
         </li>
         <li class="nav-item">
-          <%= link_to "Documents", documents_path, class: "nav-link text-white" %>
+          <%= link_to "Projects", projects_path, class: "nav-link text-white" %>
         </li>
-        <li class="nav-item">
-          <%= link_to "Employees", employees_path, class: "nav-link text-white" %>
-        </li>
+        
         <li class="nav-item">
           <%= link_to "Contact Us", contact_path, class: "nav-link text-white" %>
         </li>
@@ -31,19 +29,19 @@
 
       <!-- Right Auth Links for Devise model: Second -->
       <ul class="navbar-nav mb-2 mb-lg-0 gap-2">
-        <% if second_signed_in? %>
+        <% if user_signed_in? %>
           <li class="nav-item d-flex align-items-center text-white px-2">
-            👋 Welcome, <%= current_second.email %>
+            👋 Welcome, <%= current_user.email %>
           </li>
           <li class="nav-item">
-            <%= link_to "Logout", destroy_second_session_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to "Login", new_second_session_path, class: "btn btn-light btn-sm" %>
+            <%= link_to "Login", new_user_session_path, class: "btn btn-light btn-sm" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign Up", new_second_registration_path, class: "btn btn-outline-light btn-sm" %>
+            <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline-light btn-sm" %>
           </li>
         <% end %>
       </ul>

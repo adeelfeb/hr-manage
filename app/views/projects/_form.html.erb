@@ -1,0 +1,39 @@
+<%= form_with(model: project, local: true, class: "card shadow-sm p-4") do |form| %>
+  <% if project.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(project.errors.count, "error") %> prevented this project from being saved:</h5>
+      <ul>
+        <% project.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label fw-semibold" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Enter project title..." %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label fw-semibold" %>
+    <%= form.text_area :description, class: "form-control", rows: 4, placeholder: "Enter project description..." %>
+  </div>
+ <div class="mb-3">
+  <%= form.label :user_ids, "Assign Developers / QAs", class: "form-label fw-semibold" %>
+  <%= form.collection_select :user_ids,
+        User.where(role: [0, 1]).where.not(id: project.user_ids),
+        :id,
+        ->(user) {
+          role = user.role.gsub("is_", "").titleize
+          "#{user.name.presence || user.email} (#{role})"
+        },
+        { include_hidden: false },
+        { multiple: true, class: "form-control" } %>
+</div>
+
+
+
+
+  <%= form.submit project.new_record? ? "Create Project" : "Update Project", class: "btn btn-success" %>
+<% end %>

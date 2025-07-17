@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_16_142355) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_17_123047) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_16_142355) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "bugs", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "bug_status"
+    t.integer "project_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "creator_id"
+    t.integer "developer_id"
+    t.integer "progress_state", default: 0, null: false
+    t.integer "bug_category", default: 0, null: false
+    t.index ["project_id"], name: "index_bugs_on_project_id"
+    t.index ["user_id"], name: "index_bugs_on_user_id"
+  end
+
   create_table "documents", force: :cascade do |t|
     t.string "name"
     t.string "doc_type"
@@ -59,6 +75,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_16_142355) do
     t.datetime "updated_at", null: false
     t.date "date_of_birth"
     t.string "job_title"
+  end
+
+  create_table "project_assignments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_assignments_on_project_id"
+    t.index ["user_id"], name: "index_project_assignments_on_user_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "seconds", force: :cascade do |t|
@@ -90,11 +124,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_16_142355) do
     t.string "unconfirmed_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0
+    t.string "user_type"
+    t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bugs", "projects"
+  add_foreign_key "bugs", "users"
+  add_foreign_key "bugs", "users", column: "creator_id"
+  add_foreign_key "bugs", "users", column: "developer_id"
   add_foreign_key "documents", "employees"
+  add_foreign_key "project_assignments", "projects"
+  add_foreign_key "project_assignments", "users"
+  add_foreign_key "projects", "users"
 end

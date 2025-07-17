@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Hr Manage" %></title>
+    <title><%= content_for(:title) || "Bugzila" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -44,7 +44,7 @@
      else "alert-info"
      end
   %>
-  <div class="alert <%= alert_class %> alert-dismissible fade show" role="alert">
+  <div id="flash-notice" class="alert <%= alert_class %> alert-dismissible fade show" role="alert">
     <%= message %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
@@ -70,7 +70,7 @@
         notice.classList.remove("show");
         notice.classList.add("hide");
         setTimeout(() => notice.remove(), 500); // Remove after transition
-      }, 1000); // Hide after 3 seconds
+      }, 3000); // Hide after 3 seconds
     }
   });
 </script>

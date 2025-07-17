@@ -1,13 +1,19 @@
 Rails.application.routes.draw do
   
   # devise_for :users
-  devise_for :users
-  
-  devise_for :seconds, controllers: {
-  sessions: 'seconds/sessions',
-  registrations: 'seconds/registrations',
-  passwords: 'seconds/passwords'
+  devise_for :users, controllers: {
+  sessions: 'users/sessions',
+  registrations: 'users/registrations',
+  passwords: 'users/passwords'
 }
+
+
+  # resources :projects
+  resources :projects do
+    resources :bugs
+  end
+
+
 
 
   get "about",    to: "pages#about_us",  as: :about
@@ -16,9 +22,6 @@ Rails.application.routes.draw do
   get "login",    to: "pages#login",      as: :login
 
 
-
-  resources :employees, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  resources :documents
   get "/home" => "home#index"
   # get "home/index", to: "home#index"
 

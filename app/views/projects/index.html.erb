@@ -1,0 +1,46 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">📁 Projects</h1>
+    <% if policy(Project).new? %>
+      <%= link_to '➕ New Project', new_project_path, class: 'btn btn-primary shadow-sm' %>
+    <% end %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover shadow-sm">
+      <thead class="table-primary">
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Created By</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @projects.each do |project| %>
+          <tr>
+            <td><%= link_to project.title, project_path(project), class: "fw-bold text-decoration-none" %></td>
+            <td><%= truncate(project.description, length: 50) %></td>
+            <td><%= project.user&.name || "Manager ##{project.user_id}" %></td>
+           <td>
+  <% if policy(project).edit? %>
+    <%= link_to '✏️ Edit', edit_project_path(project), class: 'btn btn-sm btn-outline-warning me-1' %>
+  <% end %>
+
+  <% if policy(project).destroy? %>
+    <%= link_to '🗑️ Delete', project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-outline-danger me-1' %>
+  <% end %>
+
+  <% if current_user.is_qa? %>
+    <%= link_to '🐞 Add Bug', new_project_bug_path(project), class: 'btn btn-sm btn-outline-success me-1' %>
+  <% end %>
+
+  <%= link_to '🔍 More', project_path(project), class: 'btn btn-sm btn-outline-info' %>
+</td>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

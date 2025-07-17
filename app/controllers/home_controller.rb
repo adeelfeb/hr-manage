@@ -1,9 +1,27 @@
 class HomeController < ApplicationController
-  def index
-    @sub_heading = "Welcome to the HR Management System"
-    @title = "HR Management Home"
-  end
 
+  before_action :authenticate_user!
+  include Pundit
+
+  def index
+    authorize :home, :show?
+
+    case current_user.user_type
+    when "manager"
+      @title = "Welcome Manager"
+      @sub_heading = "Manager dashboard content"
+    when "developer" 
+      @title = "Welcome Developer"
+      @sub_heading = "Developer dashboard and tasks"
+    when "qa"
+      @title = "Welcome QA"
+      @sub_heading = "QA dashboard and testing tools"
+    else
+      @title = "Welcome Guest"
+      @sub_heading = "General homepage for users"
+    end
+  end
+  
   def show
     @employee = Employee.find(params[:id])
   end

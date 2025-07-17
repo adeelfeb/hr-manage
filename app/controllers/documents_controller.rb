@@ -1,16 +1,21 @@
 class DocumentsController < ApplicationController
+  before_action :authenticate_user! # Ensure Devise user is logged in
   before_action :set_document, only: [:edit, :update, :show, :destroy]
 
   def index
-    @documents = Document.all
+    # Optional: scope based on policy (e.g., only show documents user is allowed to see)
+    @documents = policy_scope(Document)
   end
 
   def new
     @document = Document.new
+    authorize @document
   end
 
   def create
     @document = Document.new(document_params)
+    authorize @document
+
     if @document.save
       redirect_to documents_path, notice: "Document added successfully"
     else
@@ -19,10 +24,12 @@ class DocumentsController < ApplicationController
   end
 
   def edit
-    # @document is set from before_action
+    authorize @document
   end
 
   def update
+    authorize @document
+
     if @document.update(document_params)
       redirect_to documents_path, notice: "Document updated successfully"
     else
@@ -31,13 +38,15 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
+    authorize @document
+
     if @document.destroy
       redirect_to documents_path, notice: "Document deleted successfully"
     end
   end
 
   def show
-    # @document is set from before_action
+    authorize @document
   end
 
   private

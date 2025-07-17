@@ -1,0 +1,78 @@
+<div class="container my-4">
+  <!-- Title + Buttons in One Row -->
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <h2 class="text-success fw-bold mb-0"><%= @project.title %></h2>
+    <div class="d-flex gap-2 mt-2 mt-md-0">
+      <% if policy(@project).edit? %>
+        <%= link_to '✏️ Edit Project', edit_project_path(@project), class: 'btn btn-outline-primary btn-sm' %>
+      <% end %>
+      <p><strong>👨‍💼 Manager:</strong> <%= @project.user&.name || "User ##{@project.user_id}" %></p>
+      <%= link_to '⬅️ Back', projects_path, class: 'btn btn-secondary btn-sm' %>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <p class="mt-2"><%= @project.description %></p>
+  
+
+ 
+
+  <!-- Bugs Section -->
+<div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+  <h4 class="text-danger fw-semibold mb-0">🐞 Project Bugs</h4>
+
+  <% if current_user.is_qa? %>
+  <%= link_to '🐞 Add Bug', new_project_bug_path(@project), class: 'btn btn-sm btn-outline-success me-1' %>
+<% end %>
+
+</div>
+
+  <% if @project.bugs.any? %>
+    <div class="overflow-auto" style="max-height: 400px;">
+      <div class="row">
+        <% @project.bugs.each do |bug| %>
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card border-danger shadow-sm h-100 d-flex flex-column justify-content-between">
+              <div class="card-body">
+                <h5 class="card-title text-danger fw-bold">
+  <%= link_to bug.title, project_bug_path(@project, bug), class: "text-decoration-none text-danger" %>
+</h5>
+
+                <p class="card-text"><%= truncate(bug.description, length: 80) %></p>
+                <p class="mb-1"><strong>Status:</strong> <%= bug.progress_state.titleize %></p>
+                <p class="mb-1"><strong>Reported By:</strong> <%= bug.user&.email || "N/A" %></p>
+                <p><strong>Assigned To:</strong> <%= bug.developer&.email || "Unassigned" %></p>
+              </div>
+              <div class="card-footer bg-transparent d-flex justify-content-end border-top-0">
+                <%= link_to '✏️ Update', edit_project_bug_path(@project, bug), class: 'btn btn-sm btn-outline-primary' %>
+
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <p class="text-muted">No bugs reported for this project yet.</p>
+  <% end %>
+</div>
+
+
+ <!-- Assigned Users -->
+  <h4 class="mt-4 text-primary fw-semibold">👥 Assigned Users</h4>
+  <div class="overflow-auto" style="max-height: 300px;">
+    <div class="row">
+      <% @project.users.each do |user| %>
+        <div class="col-md-4 mb-3">
+          <div class="card border-info shadow-sm">
+            <div class="card-body">
+              <h6 class="card-title text-info mb-1"><%= user.name.presence || user.email %></h6>
+              <p class="mb-1"><strong>Role:</strong> <%= user.role.gsub("is_", "").titleize %></p>
+              <p class="mb-0"><strong>Email:</strong> <%= user.email %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
