@@ -2,6 +2,9 @@ class Bug < ApplicationRecord
   belongs_to :project
   belongs_to :user  # QA creator
   belongs_to :developer, class_name: "User", optional: true  # Assigned developer
+  has_many :bug_assignments, dependent: :destroy
+  has_many :developers, through: :bug_assignments, source: :user
+
 
   has_one_attached :image
 

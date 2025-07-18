@@ -1,13 +1,4 @@
 class ProjectPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      if user.is_manager?
-        scope.where(user_id: user.id)
-      else
-        scope.joins(:project_assignments).where(project_assignments: { user_id: user.id })
-      end
-    end
-  end
 
   def index?
     true

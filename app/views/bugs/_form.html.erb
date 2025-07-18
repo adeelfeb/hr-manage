@@ -9,20 +9,22 @@
     </div>
   <% end %>
 
-  <div class="mb-3">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control" %>
-  </div>
+  <% unless current_user.is_developer? %>
+    <div class="mb-3">
+      <%= f.label :title %>
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
 
-  <div class="mb-3">
-    <%= f.label :description %>
-    <%= f.text_area :description, class: "form-control" %>
-  </div>
+    <div class="mb-3">
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "form-control" %>
+    </div>
 
-  <div class="mb-3">
-    <%= f.label :bug_category %>
-    <%= f.select :bug_category, Bug.bug_categories.keys.map { |k| [k.humanize, k] }, {}, class: "form-select" %>
-  </div>
+    <div class="mb-3">
+      <%= f.label :bug_category %>
+      <%= f.select :bug_category, Bug.bug_categories.keys.map { |k| [k.humanize, k] }, {}, class: "form-select" %>
+    </div>
+  <% end %>
 
   <% if current_user.is_manager? %>
     <div class="mb-3">
@@ -30,10 +32,15 @@
       <%= f.select :progress_state, Bug.progress_states.keys.map { |k| [k.humanize, k] }, {}, class: "form-select" %>
     </div>
 
-    <div class="mb-3">
-      <%= f.label :developer_id, "Assign Developer" %>
-      <%= f.collection_select :developer_id, @project.users.where(role: "is_developer"), :id, :name, { include_blank: true }, class: "form-select" %>
-    </div>
+    <%= f.label :developer_ids, "Assign Developers" %>
+<%= f.collection_select :developer_ids,
+                        @project.users.where(role: "is_developer"),
+                        :id,
+                        :email,
+                        { selected: @bug.developer_ids },
+                        { multiple: true, class: "form-select" } %>
+
+
   <% elsif current_user.is_developer? %>
     <div class="mb-3">
       <%= f.label :progress_state %>
@@ -41,10 +48,12 @@
     </div>
   <% end %>
 
-  <div class="mb-3">
-    <%= f.label :image %>
-    <%= f.file_field :image, class: "form-control" %>
-  </div>
+  <% unless current_user.is_developer? %>
+    <div class="mb-3">
+      <%= f.label :image %>
+      <%= f.file_field :image, class: "form-control" %>
+    </div>
+  <% end %>
 
   <%= f.submit "Submit Bug", class: "btn btn-primary" %>
 <% end %>

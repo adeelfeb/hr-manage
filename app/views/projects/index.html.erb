@@ -21,7 +21,7 @@
           <tr>
             <td><%= link_to project.title, project_path(project), class: "fw-bold text-decoration-none" %></td>
             <td><%= truncate(project.description, length: 50) %></td>
-            <td><%= project.user&.name || "Manager ##{project.user_id}" %></td>
+            <td><%= project.user&.email || "Manager ##{project.user_id}" %></td>
            <td>
   <% if policy(project).edit? %>
     <%= link_to '✏️ Edit', edit_project_path(project), class: 'btn btn-sm btn-outline-warning me-1' %>

@@ -8,6 +8,10 @@ class User < ApplicationRecord
   # This is the manager of the project
   has_many :created_projects, class_name: "Project", foreign_key: :user_id
 
+  has_many :bug_assignments
+  has_many :assigned_bugs, through: :bug_assignments, source: :bug
+  
+
   # This is the assigned relationship (QA/Dev)
   has_many :project_assignments
   has_many :assigned_projects, through: :project_assignments, source: :project

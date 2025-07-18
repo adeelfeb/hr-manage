@@ -6,7 +6,7 @@
       <% if policy(@project).edit? %>
         <%= link_to '✏️ Edit Project', edit_project_path(@project), class: 'btn btn-outline-primary btn-sm' %>
       <% end %>
-      <p><strong>👨‍💼 Manager:</strong> <%= @project.user&.name || "User ##{@project.user_id}" %></p>
+      <p><strong>👨‍💼 Manager:</strong> <%= @project.user&.email || "User ##{@project.user_id}" %></p>
       <%= link_to '⬅️ Back', projects_path, class: 'btn btn-secondary btn-sm' %>
     </div>
   </div>
@@ -21,16 +21,17 @@
 <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
   <h4 class="text-danger fw-semibold mb-0">🐞 Project Bugs</h4>
 
+
   <% if current_user.is_qa? %>
   <%= link_to '🐞 Add Bug', new_project_bug_path(@project), class: 'btn btn-sm btn-outline-success me-1' %>
 <% end %>
 
 </div>
 
-  <% if @project.bugs.any? %>
-    <div class="overflow-auto" style="max-height: 400px;">
-      <div class="row">
-        <% @project.bugs.each do |bug| %>
+  <% if @bugs.any? %>
+  <div class="overflow-auto" style="max-height: 400px;">
+    <div class="row">
+      <% @bugs.each do |bug| %> <!-- changed from @project.bugs -->
           <div class="col-md-6 col-lg-4 mb-3">
             <div class="card border-danger shadow-sm h-100 d-flex flex-column justify-content-between">
               <div class="card-body">
@@ -45,8 +46,10 @@
               </div>
               <div class="card-footer bg-transparent d-flex justify-content-end border-top-0">
                 <%= link_to '✏️ Update', edit_project_bug_path(@project, bug), class: 'btn btn-sm btn-outline-primary' %>
-
+                <%= link_to '📄 Details', project_bug_path(@project, bug), class: 'btn btn-sm btn-outline-secondary' %>
               </div>
+             
+
             </div>
           </div>
         <% end %>
@@ -59,6 +62,8 @@
 
 
  <!-- Assigned Users -->
+<% if current_user.is_manager? %>
+  <!-- Assigned Users -->
   <h4 class="mt-4 text-primary fw-semibold">👥 Assigned Users</h4>
   <div class="overflow-auto" style="max-height: 300px;">
     <div class="row">
@@ -75,4 +80,6 @@
       <% end %>
     </div>
   </div>
+<% end %>
+
   

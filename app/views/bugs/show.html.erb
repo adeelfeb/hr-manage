@@ -1,0 +1,57 @@
+<h2 class="text-danger fw-bold mb-4">🐞 Bug Details</h2>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h4 class="card-title mb-3 text-dark"><%= @bug.title %></h4>
+
+    <p class="mb-2">
+      <strong>Category:</strong>
+      <span class="badge bg-warning text-dark"><%= @bug.bug_category.titleize %></span>
+    </p>
+
+    <p><strong>Description:</strong></p>
+    <p><%= simple_format(@bug.description) %></p>
+
+    <hr>
+
+    <p class="mb-1">
+      <strong>Status:</strong>
+      <span class="badge <%= status_class(@bug.progress_state) %>"><%= @bug.progress_state.titleize %></span>
+    </p>
+
+    <% if current_user.is_manager? || current_user.is_developer? %>
+      <p class="mb-1"><strong>Reported by:</strong> <%= @bug.user&.email || "N/A" %></p>
+    <% end %>
+
+    <% if @bug.developer %>
+      <p class="mb-1"><strong>Assigned to:</strong> <%= @bug.developer.email %></p>
+    <% elsif current_user.is_manager? %>
+      <p class="mb-1"><strong>Assigned to:</strong> <span class="text-muted">Unassigned</span></p>
+    <% end %>
+
+    <% if @bug.image.attached? %>
+      <hr>
+      <p><strong>Attached Screenshot:</strong></p>
+      <%= image_tag @bug.image.variant(resize_to_limit: [700, 700]), class: "img-fluid rounded shadow-sm" %>
+    <% end %>
+    <% if @bug.developers.any? %>
+  <div class="mt-4">
+    <h5>Assigned Developers:</h5>
+    <ul>
+      <% @bug.developers.each do |dev| %>
+        <li><%= dev.name %> (<%= dev.email %>)</li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  </div>
+
+  <div class="card-footer d-flex justify-content-between align-items-center bg-light">
+    <%= link_to '🔙 Back to Bugs', project_path(@project), class: 'btn btn-sm btn-outline-secondary' %>
+
+
+      <%= link_to '✏️ Edit Bug', edit_project_bug_path(@project, @bug), class: 'btn btn-sm btn-outline-primary' %>
+
+  </div>
+</div>
