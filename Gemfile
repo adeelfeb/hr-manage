@@ -62,7 +62,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers" # Optional, but helps Capybara with browser drivers
-  gem 'pundit-matchers', '~> 1.7'
+  gem 'pundit-matchers', '~> 4.0'
 end
 
 
