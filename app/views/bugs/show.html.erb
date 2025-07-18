@@ -1,4 +1,10 @@
 <h2 class="text-danger fw-bold mb-4">🐞 Bug Details</h2>
+<div class="card-footer d-flex align-items-center bg-light">
+  <%= link_to '🔙 Back to Bugs', project_path(@project), class: 'btn btn-sm btn-outline-secondary me-2' %>
+
+  <%= link_to '✏️ Edit Bug', edit_project_bug_path(@project, @bug), class: 'btn btn-sm btn-outline-primary' %>
+</div>
+
 
 <div class="card shadow-sm">
   <div class="card-body">
@@ -19,39 +25,41 @@
       <span class="badge <%= status_class(@bug.progress_state) %>"><%= @bug.progress_state.titleize %></span>
     </p>
 
-    <% if current_user.is_manager? || current_user.is_developer? %>
       <p class="mb-1"><strong>Reported by:</strong> <%= @bug.user&.email || "N/A" %></p>
-    <% end %>
 
-    <% if @bug.developer %>
-      <p class="mb-1"><strong>Assigned to:</strong> <%= @bug.developer.email %></p>
-    <% elsif current_user.is_manager? %>
-      <p class="mb-1"><strong>Assigned to:</strong> <span class="text-muted">Unassigned</span></p>
-    <% end %>
 
-    <% if @bug.image.attached? %>
+   
+
+          <p class="mb-1"><strong>Assigned Developers:</strong> </p>
+     <% if @bug.developers.any? %>
+          <ul>
+            <% @bug.developers.each do |dev| %>
+              <li><%= dev.name %> (<%= dev.email %>)</li>
+            <% end %>
+          </ul>
+      <% else %>
+        <p class="text-muted">Unassigned</p>
+      <% end %>
+
+<% if @bug.image.attached? %>
+  <p><strong>Attached Screenshot:</strong></p>
+  <%= image_tag(url_for(@bug.image), class: "img-fluid rounded shadow-sm") rescue "Image not available" %>
+<% else %>
+  <p class="text-muted">No image attached</p>
+<% end %>
+
+    <%
+=begin%>
+ <% if @bug.image.attached? %>
       <hr>
       <p><strong>Attached Screenshot:</strong></p>
       <%= image_tag @bug.image.variant(resize_to_limit: [700, 700]), class: "img-fluid rounded shadow-sm" %>
-    <% end %>
-    <% if @bug.developers.any? %>
-  <div class="mt-4">
-    <h5>Assigned Developers:</h5>
-    <ul>
-      <% @bug.developers.each do |dev| %>
-        <li><%= dev.name %> (<%= dev.email %>)</li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+    <% end %> 
+<%
+=end%>
+   
 
   </div>
 
-  <div class="card-footer d-flex justify-content-between align-items-center bg-light">
-    <%= link_to '🔙 Back to Bugs', project_path(@project), class: 'btn btn-sm btn-outline-secondary' %>
-
-
-      <%= link_to '✏️ Edit Bug', edit_project_bug_path(@project, @bug), class: 'btn btn-sm btn-outline-primary' %>
-
-  </div>
+ 
 </div>

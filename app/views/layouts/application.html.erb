@@ -21,45 +21,51 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+      }
+    </style>
   </head>
 
 
 
   <body>
   <header>
-    <%= render "shared/header" %>
-  </header>
+      <%= render "shared/header" %>
+    </header>
 
-  
+    <main class="container mt-3 mb-3">
+      <% flash.each do |type, message| %>
+        <% alert_class = case type.to_sym
+          when :notice then "alert-success"
+          when :alert  then "alert-danger"
+          when :error  then "alert-danger"
+          when :success then "alert-success"
+          when :warning then "alert-warning"
+          else "alert-info"
+        end %>
+        <div id="flash-notice" class="alert <%= alert_class %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
 
-  <div class="container">
- <% flash.each do |type, message| %>
-  <%# Map flash types to Bootstrap alert classes %>
-  <% alert_class = case type.to_sym
-     when :notice then "alert-success"
-     when :alert  then "alert-danger"
-     when :error  then "alert-danger"
-     when :success then "alert-success"
-     when :warning then "alert-warning"
-     else "alert-info"
-     end
-  %>
-  <div id="flash-notice" class="alert <%= alert_class %> alert-dismissible fade show" role="alert">
-    <%= message %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% end %>
-
-
-
-    <div class="row">
-      <div class="col-md-12">
-        <%= yield %>
-      </div>
-    </div>
-  </div>
+      <%= yield %>
+    </main>
 
     <%= render "shared/footer" %>
+
 
 
 <script>

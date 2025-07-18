@@ -42,7 +42,7 @@
                 <p class="card-text"><%= truncate(bug.description, length: 80) %></p>
                 <p class="mb-1"><strong>Status:</strong> <%= bug.progress_state.titleize %></p>
                 <p class="mb-1"><strong>Reported By:</strong> <%= bug.user&.email || "N/A" %></p>
-                <p><strong>Assigned To:</strong> <%= bug.developer&.email || "Unassigned" %></p>
+            
               </div>
               <div class="card-footer bg-transparent d-flex justify-content-end border-top-0">
                 <%= link_to '✏️ Update', edit_project_bug_path(@project, bug), class: 'btn btn-sm btn-outline-primary' %>

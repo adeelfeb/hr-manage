@@ -18,20 +18,38 @@ class ProjectsController < ApplicationController
     end
   end
 
-
   def show
     @project = Project.find(params[:id])
-    authorize @project
 
-    # Show only relevant bugs based on role
-    @bugs = if current_user.is_developer?
-              @project.bugs.where(developer_id: current_user.id)
-            elsif current_user.is_qa?
-              @project.bugs.where(user_id: current_user.id)
-            else
-              @project.bugs
-            end
+    @bugs =
+      if current_user.is_developer?
+        @project.bugs
+                .joins(:developers)
+                .where(users: { id: current_user.id })
+                .distinct
+      elsif current_user.is_qa?
+        @project.bugs.where(user_id: current_user.id)
+      elsif current_user.is_manager?
+        @project.bugs
+      else
+        @bugs = Bug.none
+      end
   end
+
+
+  # def show
+  #   @project = Project.find(params[:id])
+  #   authorize @project
+
+  #   # Show only relevant bugs based on role
+  #   @bugs = if current_user.is_developer?
+  #             @project.bugs.where(developer_id: current_user.id)
+  #           elsif current_user.is_qa?
+  #             @project.bugs.where(user_id: current_user.id)
+  #           else
+  #             @project.bugs
+  #           end
+  # end
 
 
 

@@ -68,3 +68,7 @@ end
 
 gem "devise"
 gem "pundit", "~> 2.5"
+
+gem "image_processing", "~> 1.2"
+gem "mini_magick"
+
