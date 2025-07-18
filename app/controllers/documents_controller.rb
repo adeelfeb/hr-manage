@@ -1,9 +1,9 @@
 class DocumentsController < ApplicationController
   before_action :authenticate_user! # Ensure Devise user is logged in
   before_action :set_document, only: [:edit, :update, :show, :destroy]
+  # before_action :authorize_doc, only: [:edit, :update, :destroy, :show]
 
   def index
-    # Optional: scope based on policy (e.g., only show documents user is allowed to see)
     @documents = policy_scope(Document)
   end
 
@@ -28,7 +28,6 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    authorize @document
 
     if @document.update(document_params)
       redirect_to documents_path, notice: "Document updated successfully"
@@ -38,7 +37,6 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
-    authorize @document
 
     if @document.destroy
       redirect_to documents_path, notice: "Document deleted successfully"
@@ -46,7 +44,7 @@ class DocumentsController < ApplicationController
   end
 
   def show
-    authorize @document
+    
   end
 
   private
@@ -55,8 +53,10 @@ class DocumentsController < ApplicationController
     params.require(:document).permit(:name, :doc_type, :employee_id, :image)
   end
 
+
   def set_document
     @document = Document.find(params[:id])
+    authorize @document
   rescue ActiveRecord::RecordNotFound => error
     redirect_to documents_path, notice: error.message
   end

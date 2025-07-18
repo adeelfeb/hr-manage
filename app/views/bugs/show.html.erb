@@ -1,3 +1,7 @@
+
+<% content_for :title, "#{@bug.title} | #{@project.title}" %>
+
+
 <h2 class="text-danger fw-bold mb-4">🐞 Bug Details</h2>
 <div class="card-footer d-flex align-items-center bg-light">
   <%= link_to '🔙 Back to Bugs', project_path(@project), class: 'btn btn-sm btn-outline-secondary me-2' %>
