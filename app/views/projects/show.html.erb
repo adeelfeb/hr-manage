@@ -3,10 +3,11 @@
   <div class="d-flex justify-content-between align-items-center flex-wrap">
     <h2 class="text-success fw-bold mb-0"><%= @project.title %></h2>
     <div class="d-flex gap-2 mt-2 mt-md-0">
+    <p><strong>👨‍💼 Manager:</strong> <%= @project.user&.email || "User ##{@project.user_id}" %></p>
       <% if policy(@project).edit? %>
         <%= link_to '✏️ Edit Project', edit_project_path(@project), class: 'btn btn-outline-primary btn-sm' %>
       <% end %>
-      <p><strong>👨‍💼 Manager:</strong> <%= @project.user&.email || "User ##{@project.user_id}" %></p>
+      
       <%= link_to '⬅️ Back', projects_path, class: 'btn btn-secondary btn-sm' %>
     </div>
   </div>

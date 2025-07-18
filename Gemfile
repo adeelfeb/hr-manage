@@ -43,14 +43,13 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # ✅ Add RSpec and FactoryBot for testing
+  gem "rspec-rails", "~> 6.1"
+  gem "factory_bot_rails"
 end
 
 group :development do
@@ -60,10 +59,12 @@ group :development do
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "webdrivers" # Optional, but helps Capybara with browser drivers
+  gem 'pundit-matchers', '~> 1.7'
 end
+
 
 
 gem "devise"

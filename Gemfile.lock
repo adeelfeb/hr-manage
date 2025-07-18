@@ -110,6 +110,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.6.2)
     dotenv (3.1.8)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -117,6 +118,11 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
+    factory_bot (6.5.4)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.0)
+      factory_bot (~> 6.5)
+      railties (>= 6.1.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.2-aarch64-linux-gnu)
@@ -233,6 +239,8 @@ GEM
       nio4r (~> 2.0)
     pundit (2.5.0)
       activesupport (>= 3.0.0)
+    pundit-matchers (1.9.0)
+      rspec-rails (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.16)
@@ -284,6 +292,23 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.4.1)
+    rspec-core (3.13.5)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.5)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.5)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (6.1.5)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.13)
+      rspec-expectations (~> 3.13)
+      rspec-mocks (~> 3.13)
+      rspec-support (~> 3.13)
+    rspec-support (3.13.4)
     rubocop (1.78.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -382,6 +407,10 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    webdrivers (5.2.0)
+      nokogiri (~> 1.6)
+      rubyzip (>= 1.3.0)
+      selenium-webdriver (~> 4.0)
     websocket (1.2.11)
     websocket-driver (0.8.0)
       base64
@@ -409,6 +438,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  factory_bot_rails
   faker
   image_processing (~> 1.2)
   importmap-rails
@@ -418,7 +448,9 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   pundit (~> 2.5)
+  pundit-matchers (~> 1.7)
   rails (~> 8.0.2)
+  rspec-rails (~> 6.1)
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable
@@ -430,6 +462,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
+  webdrivers
 
 BUNDLED WITH
    2.6.9
