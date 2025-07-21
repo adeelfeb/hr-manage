@@ -1,7 +1,5 @@
 module BugsHelper
-
-end
-  def status_class(status)
+    def status_class(status)
     case status.to_s
     when "pending"
       "bg-secondary"
@@ -15,3 +13,5 @@ end
       "bg-dark"
     end
   end
+end
+

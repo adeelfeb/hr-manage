@@ -1,6 +1,7 @@
 class ProjectPolicy < ApplicationPolicy
 
   def index?
+    # !@user.is_qa?
     true
   end
 

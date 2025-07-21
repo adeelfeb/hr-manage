@@ -10,16 +10,26 @@ class ProjectsController < ApplicationController
   #   # @projects = Project.all
 
   # end
+  # def index
+
+  #   if current_user.is_manager?
+  #     @projects = Project.where(user_id: current_user.id)
+  #   else
+  #     @projects = current_user.assigned_projects
+  #   end
+  # end
+
   def index
+    authorize Project
     if current_user.is_manager?
-      @projects = Project.where(user_id: current_user.id)
-    else
-      @projects = current_user.assigned_projects
+      @projects = Project.where(user_id: current_user.id) # Assuming managers 'own' projects via user_id
+    else  
+      @projects = current_user.assigned_projects # Assuming a method on User model for projects assigned to them
     end
   end
 
   def show
-    @project = Project.find(params[:id])
+    # @project = Project.find(params[:id])
 
     @bugs =
       if current_user.is_developer?
